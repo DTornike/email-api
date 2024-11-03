@@ -73,6 +73,13 @@ Start the development server:
 python manage.py runserver
 ```
 
+
+### Swager
+http://127.0.0.1:8000/swagger/
+
+### Redoc
+http://127.0.0.1:8000/redoc/
+
 The server will start at `http://127.0.0.1:8000/`. You can now access the application in your browser.
 
 ## License

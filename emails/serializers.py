@@ -2,9 +2,11 @@ import mimetypes
 from rest_framework import serializers
 from .models import Email
 
+
 class EmailSerializer(serializers.ModelSerializer):
     sender = serializers.ReadOnlyField(source='sender.username')
-    attachment = serializers.SerializerMethodField()
+    attachment = serializers.FileField(required=False)
+    attachment_detail = serializers.SerializerMethodField()
 
     # Allowed file types list for validation
     ALLOWED_FILE_TYPES = [
@@ -20,6 +22,7 @@ class EmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Email
         fields = '__all__'
+        extra_fields = ['attachment_detail']
 
     def validate_attachment(self, value):
         allowed_content_types = [file['content_type'] for file in self.ALLOWED_FILE_TYPES]
@@ -30,7 +33,7 @@ class EmailSerializer(serializers.ModelSerializer):
 
         return value
 
-    def get_attachment(self, obj):
+    def get_attachment_detail(self, obj):
         if obj.attachment:
             attachment_path = obj.attachment.name
             mime_type, _ = mimetypes.guess_type(attachment_path)
