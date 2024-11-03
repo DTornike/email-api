@@ -1,2 +1,3 @@
 # temp file upload for local development
 ./media
+.env
